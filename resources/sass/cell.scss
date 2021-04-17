@@ -1,0 +1,17 @@
+.cell {
+    margin-top: 1.5rem;
+}
+
+@include media-breakpoint-up(md) {
+    .cells-row {
+        display: flex;
+    }
+
+    .cell {
+        flex-grow: 1;
+
+        &:not(:first-of-type) {
+            margin-left: 1.5rem;
+        }
+    }
+}
