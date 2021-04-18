@@ -11,7 +11,10 @@
         @foreach(auth()->user()->cells->chunk(3) as $row)
             <div class="cells-row">
                 @foreach($row as $cell)
-                    <cell url="{{ $cell->buttonUrl() }}" edit-url="{{ route('cell.edit', $cell) }}" color="{{ $cell->color }}"></cell>
+                    <cell url="{{ $cell->buttonUrl() }}"
+                          color="{{ $cell->color }}"
+                          edit-url="{{ route('cell.edit', $cell) }}"
+                          delete-url="{{ route('ajax.cell.delete', $cell) }}"></cell>
                 @endforeach
             </div>
         @endforeach

@@ -18,7 +18,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('home', 'HomeController@index')->name('home');
     Route::get('cells/{cell}', 'CellController@edit')->name('cell.edit');
     Route::put('cells/{cell}', 'CellController@update')->name('cell.update');
+
+    Route::namespace('Ajax')->group(function () {
+        Route::delete('cells/{cell}', 'CellController@destroy')->name('ajax.cell.delete');
+    });
 });

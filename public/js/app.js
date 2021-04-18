@@ -1974,8 +1974,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['url', 'color', 'editUrl']
+  props: ['url', 'color', 'editUrl', 'deleteUrl'],
+  methods: {
+    deleteCell: function deleteCell() {
+      if (confirm('Are you sure want to reset this link?')) {
+        axios["delete"](this.deleteUrl).then(function (response) {
+          location.reload();
+        })["catch"](function (error) {
+          alert('Something went wrong. Please try again later.');
+        });
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -2010,11 +2025,8 @@ __webpack_require__.r(__webpack_exports__);
   props: ['colors', 'selectedColor'],
   data: function data() {
     return {
-      selectedColor: this.selectedColor
+      color: this.selectedColor
     };
-  },
-  mounted: function mounted() {
-    console.log('Hello ?');
   }
 });
 
@@ -38366,15 +38378,23 @@ var render = function() {
         _c("span", [
           _c("a", { attrs: { href: _vm.editUrl } }, [
             _c("i", {
-              staticClass: "fa fa-pencil text-success",
+              staticClass: "fa fa-pencil text-success cursor-pointer",
               attrs: { "aria-hidden": "true" }
             })
           ]),
           _vm._v(" "),
-          _c("i", {
-            staticClass: "fa fa-trash text-danger ml-2",
-            attrs: { "aria-hidden": "true" }
-          })
+          _c("a", { attrs: { href: _vm.deleteUrl } }, [
+            _c("i", {
+              staticClass: "fa fa-trash text-danger ml-2 cursor-pointer",
+              attrs: { "aria-hidden": "true" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.deleteCell($event)
+                }
+              }
+            })
+          ])
         ])
       ]),
       _vm._v(" "),
@@ -38416,7 +38436,7 @@ var render = function() {
           { staticClass: "input-group-text", attrs: { for: "color" } },
           [
             _vm._v("\n                Color "),
-            _c("span", { class: "color-sample bg-" + _vm.selectedColor })
+            _c("span", { class: "color-sample bg-" + _vm.color })
           ]
         )
       ]),
@@ -38428,8 +38448,8 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.selectedColor,
-              expression: "selectedColor"
+              value: _vm.color,
+              expression: "color"
             }
           ],
           staticClass: "custom-select",
@@ -38444,7 +38464,7 @@ var render = function() {
                   var val = "_value" in o ? o._value : o.value
                   return val
                 })
-              _vm.selectedColor = $event.target.multiple
+              _vm.color = $event.target.multiple
                 ? $$selectedVal
                 : $$selectedVal[0]
             }
